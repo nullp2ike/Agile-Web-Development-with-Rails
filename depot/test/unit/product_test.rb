@@ -65,4 +65,14 @@ class ProductTest < ActiveSupport::TestCase
                    product.errors[:title].join('; ')
   end
   
+  test "minimum title length is 10" do
+      product = Product.new(
+                            :description => "yyy",
+                            :price       => 1,
+                            :image_url   => "fred.gif")
+      product.title = "not this"
+      assert product.invalid?
+      assert_equal "is too short (minimum is 10 characters)", 
+                    product.errors[:title].join('; ')
+  end
 end
